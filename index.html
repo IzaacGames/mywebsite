@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISAAC SHEK | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Interactive Background Glow Circles -->
+    <div class="glow-container" id="glowContainer">
+        <div class="glow-circle" data-speed="0.05"></div>
+        <div class="glow-circle" data-speed="0.08"></div>
+        <div class="glow-circle" data-speed="0.03"></div>
+        <div class="glow-circle" data-speed="0.06"></div>
+        <div class="glow-circle" data-speed="0.04"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">IS</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#games" class="nav-link">Games</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Name -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title" data-text="ISAAC SHEK">
+                <span class="glitch-text">ISAAC SHEK</span>
+            </h1>
+            <div class="hero-subtitle">
+                <span class="typing-text">Game Developer • Creator • Innovator</span>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <span>Scroll Down</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Description Section -->
+    <section id="about" class="about-section">
+        <div class="metallic-board">
+            <div class="board-header">
+                <div class="board-lights">
+                    <span class="light"></span>
+                    <span class="light"></span>
+                    <span class="light"></span>
+                </div>
+                <div class="board-title">PROFILE_DATA.sys</div>
+            </div>
+            <div class="board-content">
+                <!-- whoami Section -->
+                <div class="terminal-block">
+                    <div class="terminal-header">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-command">whoami</span>
+                    </div>
+                    <div class="terminal-output">
+                        <p class="output-line"><span class="label">&gt; name:</span> Isaac Shek</p>
+                        <p class="output-line"><span class="label">&gt; role:</span> Game Developer & Creative Technologist</p>
+                        <p class="output-line"><span class="label">&gt; status:</span> <span class="status-online">ONLINE</span></p>
+                        <p class="output-line"><span class="label">&gt; mission:</span> Crafting immersive digital experiences</p>
+                    </div>
+                </div>
+
+                <!-- Hobbies Section -->
+                <div class="terminal-block">
+                    <div class="terminal-header">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-command">cat hobbies.txt</span>
+                    </div>
+                    <div class="terminal-output">
+                        <p class="output-line"><span class="hobby-icon">🎮</span> Game Development</p>
+                        <p class="output-line"><span class="hobby-icon">💻</span> Programming</p>
+                        <p class="output-line"><span class="hobby-icon">🎨</span> Digital Art & Design</p>
+                        <p class="output-line"><span class="hobby-icon">🎵</span> Music Production</p>
+                        <p class="output-line"><span class="hobby-icon">📚</span> Learning New Technologies</p>
+                    </div>
+                </div>
+            </div>
+            <div class="board-footer">
+                <div class="scan-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="games-section">
+        <div class="section-header">
+            <h2 class="section-title">MY GAMES</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="games-container">
+            <!-- Game 1 - The Frustum Curse -->
+            <div class="game-card slide-left">
+                <div class="game-icon-wrapper">
+                    <img src="TFC.jpg" alt="The Frustum Curse" class="game-icon">
+                    <div class="icon-glow"></div>
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">The Frustum Curse</h3>
+                    <p class="game-description">[YOUR DESCRIPTION]</p>
+                    <div class="game-tags">
+                        <span class="tag">Game</span>
+                    </div>
+                </div>
+                <div class="card-border"></div>
+            </div>
+
+            <!-- Game 2 - Tower Defense -->
+            <div class="game-card slide-right">
+                <div class="game-icon-wrapper">
+                    <img src="TD.jpg" alt="Tower Defense" class="game-icon">
+                    <div class="icon-glow"></div>
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">Tower Defense</h3>
+                    <p class="game-description">[YOUR DESCRIPTION]</p>
+                    <div class="game-tags">
+                        <span class="tag">Game</span>
+                    </div>
+                </div>
+                <div class="card-border"></div>
+            </div>
+
+            <!-- Game 3 - Nonabox -->
+            <div class="game-card slide-left">
+                <div class="game-icon-wrapper">
+                    <img src="nonabox.jpg" alt="Nonabox" class="game-icon">
+                    <div class="icon-glow"></div>
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">Nonabox</h3>
+                    <p class="game-description">[YOUR DESCRIPTION]</p>
+                    <div class="game-tags">
+                        <span class="tag">Game</span>
+                    </div>
+                </div>
+                <div class="card-border"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Isaac Shek. All rights reserved.</p>
+            <p class="footer-tagline">Built with passion in the neon-lit digital frontier.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
