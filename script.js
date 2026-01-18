@@ -4,112 +4,98 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initGlowCircles();
+    initParallaxBackground();
+    initTitleCursorTracking();
     initNavbar();
     initScrollAnimations();
     initTypingEffect();
+    initBinaryEffect();
+    initFlagAnimation();
 });
 
 /* ============================================
-   INTERACTIVE GLOW CIRCLES
-   Circles react to mouse movement
+   PARALLAX BACKGROUND SCROLLING
+   Background scrolls slower than content
+   Stops when image reaches its bottom
    ============================================ */
-function initGlowCircles() {
-    const glowCircles = document.querySelectorAll('.glow-circle');
-    const container = document.getElementById('glowContainer');
+function initParallaxBackground() {
+    const cyberpunkBg = document.getElementById('cyberpunkBg');
+    const bgImage = document.querySelector('.bg-image');
     
-    // Store original positions and sizes
-    const circleData = [];
-    glowCircles.forEach((circle, index) => {
-        const rect = circle.getBoundingClientRect();
-        circleData.push({
-            element: circle,
-            originalX: rect.left + rect.width / 2,
-            originalY: rect.top + rect.height / 2,
-            originalSize: rect.width,
-            speed: parseFloat(circle.dataset.speed) || 0.05,
-            currentX: 0,
-            currentY: 0,
-            currentScale: 1
-        });
-    });
+    if (!cyberpunkBg || !bgImage) return;
 
-    // Mouse move handler
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let targetX = mouseX;
-    let targetY = mouseY;
-
-    document.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-    });
-
-    // Animation loop for smooth movement
-    function animateGlowCircles() {
-        // Smooth interpolation for mouse position
-        mouseX += (targetX - mouseX) * 0.1;
-        mouseY += (targetY - mouseY) * 0.1;
-
-        glowCircles.forEach((circle, index) => {
-            const data = circleData[index];
-            const rect = circle.getBoundingClientRect();
-            const circleCenterX = rect.left + rect.width / 2;
-            const circleCenterY = rect.top + rect.height / 2;
-
-            // Calculate distance from mouse
-            const deltaX = mouseX - circleCenterX;
-            const deltaY = mouseY - circleCenterY;
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-            // Circles move away from mouse (repel effect)
-            const maxDistance = 400;
-            const influence = Math.max(0, 1 - distance / maxDistance);
-            
-            // Calculate repel direction (opposite of mouse direction)
-            const repelX = -deltaX * influence * data.speed * 5;
-            const repelY = -deltaY * influence * data.speed * 5;
-
-            // Size change based on proximity (grow when mouse is close)
-            const targetScale = 1 + influence * 0.3;
-            data.currentScale += (targetScale - data.currentScale) * 0.1;
-
-            // Smooth movement
-            data.currentX += (repelX - data.currentX) * 0.08;
-            data.currentY += (repelY - data.currentY) * 0.08;
-
-            // Apply transforms
-            circle.style.transform = `translate(${data.currentX}px, ${data.currentY}px) scale(${data.currentScale})`;
-            
-            // Adjust opacity based on scale
-            circle.style.opacity = 0.4 + influence * 0.4;
-        });
-
-        requestAnimationFrame(animateGlowCircles);
+    // Wait for image to load to get its dimensions
+    bgImage.addEventListener('load', updateParallax);
+    
+    // If already loaded
+    if (bgImage.complete) {
+        updateParallax();
     }
 
-    animateGlowCircles();
+    function updateParallax() {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const imageHeight = bgImage.offsetHeight;
+            const bgHeight = cyberpunkBg.offsetHeight;
+            
+            // Calculate the maximum scroll before image runs out
+            // The image should stop moving when its bottom aligns with viewport bottom
+            const maxScroll = documentHeight - windowHeight;
+            const maxImageOffset = imageHeight - windowHeight;
+            
+            // Calculate parallax with limit
+            const parallaxSpeed = 0.3;
+            let offset = scrolled * parallaxSpeed;
+            
+            // Clamp the offset so image doesn't scroll past its bottom
+            if (offset > maxImageOffset) {
+                offset = maxImageOffset;
+            }
+            
+            cyberpunkBg.style.transform = `translateY(-${offset}px)`;
+        });
+    }
+}
 
-    // Add floating animation
-    glowCircles.forEach((circle, index) => {
-        const delay = index * 0.5;
-        const duration = 4 + Math.random() * 2;
-        circle.style.animation = `floatGlow ${duration}s ease-in-out ${delay}s infinite`;
+/* ============================================
+   3D TITLE CURSOR TRACKING
+   Title faces where the cursor is
+   ============================================ */
+function initTitleCursorTracking() {
+    const heroTitle = document.getElementById('heroTitle');
+    const heroSection = document.querySelector('.hero-section');
+    
+    if (!heroTitle || !heroSection) return;
+
+    document.addEventListener('mousemove', (e) => {
+        // Get the center of the title
+        const rect = heroTitle.getBoundingClientRect();
+        const titleCenterX = rect.left + rect.width / 2;
+        const titleCenterY = rect.top + rect.height / 2;
+
+        // Calculate the difference from cursor to title center
+        const deltaX = e.clientX - titleCenterX;
+        const deltaY = e.clientY - titleCenterY;
+
+        // Calculate rotation angles (limited range for subtle effect)
+        const maxRotation = 15; // Maximum degrees of rotation
+        const rotateY = (deltaX / window.innerWidth) * maxRotation * 2;
+        const rotateX = -(deltaY / window.innerHeight) * maxRotation * 2;
+
+        // Apply the 3D rotation
+        heroTitle.style.transform = `
+            perspective(1000px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+        `;
     });
 
-    // Add keyframes for floating
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes floatGlow {
-            0%, 100% { 
-                margin-top: 0; 
-            }
-            50% { 
-                margin-top: -20px; 
-            }
-        }
-    `;
-    document.head.appendChild(style);
+    // Reset rotation when mouse leaves the viewport
+    document.addEventListener('mouseleave', () => {
+        heroTitle.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+    });
 }
 
 /* ============================================
@@ -143,7 +129,7 @@ function initNavbar() {
 
 /* ============================================
    SCROLL ANIMATIONS
-   Games slide in from left/right
+   Projects slide in from left/right
    ============================================ */
 function initScrollAnimations() {
     const gameCards = document.querySelectorAll('.game-card');
@@ -203,6 +189,25 @@ function initScrollAnimations() {
 
         titleObserver.observe(title);
     });
+
+    // Animate banner
+    const bannerContainer = document.querySelector('.banner-container');
+    if (bannerContainer) {
+        bannerContainer.style.opacity = '0';
+        bannerContainer.style.transform = 'translateY(30px)';
+        bannerContainer.style.transition = 'all 0.8s ease';
+
+        const bannerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        bannerObserver.observe(bannerContainer);
+    }
 }
 
 /* ============================================
@@ -231,33 +236,105 @@ function initTypingEffect() {
 }
 
 /* ============================================
-   PARALLAX EFFECT ON SCROLL
+   BINARY EFFECT FOR COMPETITIVE PROGRAMMING
+   0s and 1s fade in/out around text
+   ============================================ */
+function initBinaryEffect() {
+    const binaryContainer = document.getElementById('binaryContainer');
+    if (!binaryContainer) return;
+
+    const binaryDigits = [];
+    const numDigits = 20;
+
+    // Create binary digit elements
+    for (let i = 0; i < numDigits; i++) {
+        const digit = document.createElement('span');
+        digit.className = 'binary-digit';
+        digit.textContent = Math.random() > 0.5 ? '1' : '0';
+        
+        // Randomly assign white or black color
+        digit.classList.add(Math.random() > 0.5 ? 'white' : 'black');
+        
+        // Position around the text
+        const angle = (i / numDigits) * Math.PI * 2;
+        const radius = 60 + Math.random() * 40;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * (radius * 0.4) - 5;
+        
+        digit.style.left = `calc(50% + ${x}px)`;
+        digit.style.top = `calc(50% + ${y}px)`;
+        digit.style.animationDelay = `${Math.random() * 2}s`;
+        
+        binaryContainer.appendChild(digit);
+        binaryDigits.push(digit);
+    }
+
+    // Periodically change digits
+    setInterval(() => {
+        binaryDigits.forEach(digit => {
+            if (Math.random() > 0.7) {
+                digit.textContent = Math.random() > 0.5 ? '1' : '0';
+                digit.classList.remove('white', 'black');
+                digit.classList.add(Math.random() > 0.5 ? 'white' : 'black');
+            }
+        });
+    }, 500);
+}
+
+/* ============================================
+   FLAG ANIMATION FOR CTF
+   Waving flag effect (smaller)
+   ============================================ */
+function initFlagAnimation() {
+    const flagPath = document.querySelector('.flag-path');
+    if (!flagPath) return;
+
+    let phase = 0;
+    
+    function animateFlag() {
+        phase += 0.15;
+        
+        const wave1 = Math.sin(phase) * 2;
+        const wave2 = Math.sin(phase + 1) * 2;
+        const wave3 = Math.sin(phase + 2) * 2;
+        const wave4 = Math.sin(phase + 3) * 2;
+        
+        const path = `M0 0 
+            Q10 ${wave1} 20 ${wave2 * 0.5} 
+            Q30 ${wave2} 40 ${wave3 * 0.5} 
+            Q50 ${wave3} 60 ${wave4 * 0.3} 
+            L60 20 
+            Q50 ${20 - wave3} 40 ${20 - wave3 * 0.5} 
+            Q30 ${20 - wave2} 20 ${20 - wave2 * 0.5} 
+            Q10 ${20 - wave1} 0 20 Z`;
+        
+        flagPath.setAttribute('d', path);
+        requestAnimationFrame(animateFlag);
+    }
+    
+    animateFlag();
+}
+
+/* ============================================
+   PARALLAX EFFECT ON SCROLL FOR HERO
    ============================================ */
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const heroTitle = document.querySelector('.hero-title');
+    const heroTitle = document.getElementById('heroTitle');
     
-    if (heroTitle) {
-        const rate = scrolled * 0.3;
-        heroTitle.style.transform = `translateY(${rate}px)`;
-        heroTitle.style.opacity = 1 - scrolled / 600;
+    if (heroTitle && scrolled < window.innerHeight) {
+        const rate = scrolled * 0.2;
+        const currentTransform = heroTitle.style.transform || '';
+        // Only apply parallax if not in the first viewport
+        if (scrolled > 100) {
+            heroTitle.style.opacity = Math.max(0, 1 - scrolled / 500);
+        }
     }
 });
 
 /* ============================================
    ADDITIONAL INTERACTIVE EFFECTS
    ============================================ */
-
-// Add sparkle effect on hero title hover
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle) {
-    heroTitle.addEventListener('mouseenter', () => {
-        heroTitle.style.animation = 'none';
-        setTimeout(() => {
-            heroTitle.style.animation = '';
-        }, 10);
-    });
-}
 
 // Add ripple effect on game cards
 document.querySelectorAll('.game-card').forEach(card => {
@@ -305,7 +382,7 @@ console.log(`
 %c██║███████║██║  ██║██║  ██║╚██████╗    ███████║██║  ██║███████╗██║  ██╗
 %c╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝    ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
 
-%cWelcome to my portfolio! 🚀
+%cWelcome to my portfolio!
 %cBuilt with passion in the neon-lit digital frontier.
 `, 
 'color: #00d4ff', 

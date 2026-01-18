@@ -31,7 +31,7 @@ html {
 
 body {
     font-family: 'Outfit', sans-serif;
-    background: linear-gradient(135deg, var(--darker-blue) 0%, var(--dark-blue) 50%, #0d1b2a 100%);
+    background: var(--darker-blue);
     color: var(--text-white);
     min-height: 100vh;
     overflow-x: hidden;
@@ -39,65 +39,37 @@ body {
 }
 
 /* ============================================
-   INTERACTIVE GLOW CIRCLES BACKGROUND
+   CYBERPUNK CITY BACKGROUND (Image)
    ============================================ */
-.glow-container {
+.cyberpunk-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    pointer-events: none;
+    height: 120%;
     z-index: 0;
     overflow: hidden;
 }
 
-.glow-circle {
+.bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(5px);
+    transform: scale(1.1);
+}
+
+.bg-overlay {
     position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.6;
-    transition: transform 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out;
-}
-
-.glow-circle:nth-child(1) {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, var(--glow-orange) 0%, transparent 70%);
-    top: 10%;
-    left: 20%;
-}
-
-.glow-circle:nth-child(2) {
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, var(--glow-yellow) 0%, transparent 70%);
-    top: 60%;
-    right: 15%;
-}
-
-.glow-circle:nth-child(3) {
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, var(--glow-orange) 0%, transparent 70%);
-    bottom: 20%;
-    left: 10%;
-}
-
-.glow-circle:nth-child(4) {
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, var(--glow-yellow) 0%, transparent 70%);
-    top: 30%;
-    right: 30%;
-}
-
-.glow-circle:nth-child(5) {
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, var(--glow-orange) 0%, transparent 70%);
-    top: 70%;
-    left: 50%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,
+        rgba(5, 5, 16, 0.4) 0%,
+        rgba(10, 10, 26, 0.5) 50%,
+        rgba(5, 5, 16, 0.7) 100%);
+    pointer-events: none;
 }
 
 /* ============================================
@@ -182,7 +154,7 @@ body {
 }
 
 /* ============================================
-   HERO SECTION - NAME
+   HERO SECTION - NAME (3D CURSOR TRACKING)
    ============================================ */
 .hero-section {
     min-height: 100vh;
@@ -192,6 +164,7 @@ body {
     position: relative;
     z-index: 1;
     padding-top: 80px;
+    perspective: 1000px;
 }
 
 .hero-content {
@@ -205,70 +178,36 @@ body {
     letter-spacing: 0.1em;
     position: relative;
     margin-bottom: 1rem;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
 }
 
-.glitch-text {
-    position: relative;
+.title-text {
     display: inline-block;
     color: var(--text-white);
     text-shadow: 
-        0 0 10px var(--primary-blue),
-        0 0 20px var(--primary-blue),
-        0 0 40px var(--primary-blue),
-        0 0 80px var(--secondary-blue);
-    animation: textGlow 2s ease-in-out infinite alternate;
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.4),
+        0 0 80px rgba(255, 255, 255, 0.2);
+    animation: whiteGlow 2s ease-in-out infinite alternate;
 }
 
-.glitch-text::before,
-.glitch-text::after {
-    content: 'ISAAC SHEK';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-}
-
-.glitch-text::before {
-    color: var(--accent-cyan);
-    animation: glitch-1 0.3s infinite linear alternate-reverse;
-    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-    transform: translateX(-2px);
-}
-
-.glitch-text::after {
-    color: var(--accent-pink);
-    animation: glitch-2 0.3s infinite linear alternate-reverse;
-    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-    transform: translateX(2px);
-}
-
-@keyframes glitch-1 {
-    0% { transform: translateX(-2px); }
-    100% { transform: translateX(2px); }
-}
-
-@keyframes glitch-2 {
-    0% { transform: translateX(2px); }
-    100% { transform: translateX(-2px); }
-}
-
-@keyframes textGlow {
+@keyframes whiteGlow {
     0% {
         text-shadow: 
-            0 0 10px var(--primary-blue),
-            0 0 20px var(--primary-blue),
-            0 0 40px var(--primary-blue),
-            0 0 80px var(--secondary-blue);
+            0 0 10px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(255, 255, 255, 0.6),
+            0 0 40px rgba(255, 255, 255, 0.4),
+            0 0 80px rgba(255, 255, 255, 0.2);
     }
     100% {
         text-shadow: 
-            0 0 20px var(--primary-blue),
-            0 0 40px var(--primary-blue),
-            0 0 60px var(--primary-blue),
-            0 0 100px var(--secondary-blue),
-            0 0 150px var(--secondary-blue);
+            0 0 20px rgba(255, 255, 255, 1),
+            0 0 40px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(255, 255, 255, 0.6),
+            0 0 100px rgba(255, 255, 255, 0.4);
     }
 }
 
@@ -486,15 +425,31 @@ body {
     min-width: 100px;
 }
 
-.status-online {
-    color: #27c93f;
-    text-shadow: 0 0 10px #27c93f;
-    animation: blink 1s step-end infinite;
+.team-link {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.hobby-icon {
-    font-size: 1.2rem;
-    margin-right: 0.5rem;
+.team-link:hover {
+    color: var(--primary-blue);
+    text-shadow: 0 0 10px var(--primary-blue);
+}
+
+.team-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--primary-blue);
+    transition: width 0.3s ease;
+}
+
+.team-link:hover::after {
+    width: 100%;
 }
 
 .board-footer {
@@ -520,7 +475,170 @@ body {
 }
 
 /* ============================================
-   GAMES SECTION
+   HOBBIES SPECIAL EFFECTS
+   ============================================ */
+.hobbies-output {
+    gap: 0.5rem;
+}
+
+.hobby-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    height: 45px;
+    min-height: 45px;
+    max-height: 45px;
+}
+
+.hobby-item-left {
+    justify-content: flex-start;
+}
+
+/* Game Development - Changing font and gradient */
+.hobby-gamedev {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    height: 1.2rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gamedevEffect 0.8s steps(1) infinite;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes gamedevEffect {
+    0% {
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    25% {
+        background: linear-gradient(90deg, #00ff88, #ff6600);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    50% {
+        background: linear-gradient(90deg, #ffcc00, #ff0066);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    75% {
+        background: linear-gradient(90deg, #00d4ff, #ff00aa);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    100% {
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+}
+
+/* Competitive Programming - Binary effect */
+.binary-container {
+    position: relative;
+    display: inline-block;
+    padding: 0 50px 0 0;
+}
+
+.hobby-cp {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    position: relative;
+    z-index: 2;
+}
+
+.binary-digit {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+    pointer-events: none;
+    animation: binaryFade 2s ease-in-out infinite;
+    z-index: 1;
+}
+
+.binary-digit.white {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.binary-digit.black {
+    color: rgba(0, 0, 0, 0.9);
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes binaryFade {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0.8); }
+    50% { opacity: 1; transform: translateY(-8px) scale(1); }
+}
+
+/* Capture-The-Flag - Waving flag */
+.hobby-ctf {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ff6b00;
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+}
+
+.flag-container {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 10px;
+    height: 24px;
+}
+
+.flag-pole {
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(to bottom, #888, #555);
+    border-radius: 1px;
+    box-shadow: 1px 0 2px rgba(0,0,0,0.3);
+}
+
+.flag-wave {
+    margin-left: 0;
+    margin-top: 1px;
+    transform-origin: left center;
+}
+
+.flag-svg {
+    width: 30px;
+    height: 14px;
+    overflow: visible;
+}
+
+.flag-path {
+    fill: url(#flagGradient);
+    animation: waveFlag 0.8s ease-in-out infinite;
+    transform-origin: left center;
+}
+
+@keyframes waveFlag {
+    0% {
+        d: path('M0 0 Q10 1.5 20 0 Q30 -1.5 40 0 Q50 1.5 60 0 L60 20 Q50 18.5 40 20 Q30 21.5 20 20 Q10 18.5 0 20 Z');
+    }
+    25% {
+        d: path('M0 0 Q10 -1 20 1 Q30 -1 40 1 Q50 -1 60 0 L60 20 Q50 21 40 19 Q30 21 20 19 Q10 21 0 20 Z');
+    }
+    50% {
+        d: path('M0 0 Q10 -1.5 20 0 Q30 1.5 40 0 Q50 -1.5 60 0 L60 20 Q50 21.5 40 20 Q30 18.5 20 20 Q10 21.5 0 20 Z');
+    }
+    75% {
+        d: path('M0 0 Q10 1 20 -1 Q30 1 40 -1 Q50 1 60 0 L60 20 Q50 19 40 21 Q30 19 20 21 Q10 19 0 20 Z');
+    }
+    100% {
+        d: path('M0 0 Q10 1.5 20 0 Q30 -1.5 40 0 Q50 1.5 60 0 L60 20 Q50 18.5 40 20 Q30 21.5 20 20 Q10 18.5 0 20 Z');
+    }
+}
+
+/* ============================================
+   PROJECTS SECTION
    ============================================ */
 .games-section {
     min-height: 100vh;
@@ -531,7 +649,7 @@ body {
 
 .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .section-title {
@@ -539,9 +657,14 @@ body {
     font-weight: 800;
     letter-spacing: 0.2em;
     color: var(--text-white);
-    text-shadow: 0 0 30px var(--primary-blue);
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.4),
+        0 0 80px rgba(255, 255, 255, 0.2);
     position: relative;
     display: inline-block;
+    animation: whiteGlow 2s ease-in-out infinite alternate;
 }
 
 .section-line {
@@ -550,6 +673,40 @@ body {
     background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
     margin: 1.5rem auto 0;
     box-shadow: 0 0 20px var(--primary-blue);
+}
+
+/* Banner */
+.banner-container {
+    max-width: 400px;
+    margin: 2rem auto 3rem;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.banner-container:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.4);
+}
+
+.projects-banner {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.banner-container:hover .projects-banner {
+    transform: scale(1.02);
+}
+
+/* Game card links */
+.game-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .games-container {
@@ -604,14 +761,30 @@ body {
     left: 100%;
 }
 
+/* Double icons wrapper */
+.game-icons-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
 .game-icon-wrapper {
     position: relative;
     flex-shrink: 0;
 }
 
-.game-icon {
+.icon-secondary .game-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.icon-primary .game-icon {
     width: 150px;
     height: 150px;
+}
+
+.game-icon {
     border-radius: 15px;
     object-fit: cover;
     border: 2px solid rgba(0, 212, 255, 0.3);
@@ -705,6 +878,71 @@ body {
 }
 
 /* ============================================
+   ACHIEVEMENTS SECTION
+   ============================================ */
+.achievements-section {
+    padding: 100px 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.achievements-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: linear-gradient(145deg, rgba(26, 26, 46, 0.9), rgba(45, 45, 68, 0.9));
+    border-radius: 15px;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.achievement-item:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    transform: translateX(10px);
+}
+
+.achievement-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.achievement-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+}
+
+.achievement-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.achievement-rank {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    text-shadow: 0 0 10px var(--primary-blue);
+}
+
+.achievement-team {
+    font-size: 0.9rem;
+    color: var(--glow-orange);
+    font-weight: 500;
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 .footer {
@@ -713,6 +951,7 @@ body {
     border-top: 1px solid rgba(0, 212, 255, 0.1);
     position: relative;
     z-index: 1;
+    background: rgba(5, 5, 16, 0.9);
 }
 
 .footer-content p {
@@ -747,7 +986,16 @@ body {
         text-align: center;
     }
 
-    .game-icon {
+    .game-icons-wrapper {
+        justify-content: center;
+    }
+
+    .icon-secondary .game-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .icon-primary .game-icon {
         width: 120px;
         height: 120px;
     }
@@ -773,6 +1021,14 @@ body {
     .label {
         min-width: auto;
     }
+
+    .hobby-item {
+        flex-wrap: wrap;
+    }
+
+    .binary-container {
+        padding: 0 30px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -790,10 +1046,5 @@ body {
 
     .hero-subtitle {
         letter-spacing: 0.1em;
-    }
-
-    .glow-circle {
-        width: 200px !important;
-        height: 200px !important;
     }
 }
