@@ -647,6 +647,95 @@ body {
     z-index: 1;
 }
 
+/* ============================================
+   DISCORD SECTION
+   ============================================ */
+.discord-section {
+    padding: 100px 2rem 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.discord-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: linear-gradient(145deg, rgba(18, 18, 34, 0.9), rgba(32, 32, 54, 0.85));
+    box-shadow: 0 0 35px rgba(0, 212, 255, 0.14);
+    text-align: center;
+}
+
+.discord-neon-text {
+    font-family: 'Audiowide', sans-serif;
+    font-size: clamp(1.4rem, 3.2vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: transparent;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: discordRainbowNeon 3.2s steps(1) infinite;
+    margin-bottom: 1.8rem;
+}
+
+@keyframes discordRainbowNeon {
+    0% {
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: 0 0 8px rgba(255, 0, 255, 0.7), 0 0 22px rgba(0, 255, 255, 0.55);
+    }
+    25% {
+        background: linear-gradient(90deg, #00ff88, #ff6600);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: 0 0 8px rgba(0, 255, 136, 0.7), 0 0 22px rgba(255, 102, 0, 0.55);
+    }
+    50% {
+        background: linear-gradient(90deg, #ffcc00, #ff0066);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: 0 0 8px rgba(255, 204, 0, 0.7), 0 0 22px rgba(255, 0, 102, 0.55);
+    }
+    75% {
+        background: linear-gradient(90deg, #00d4ff, #ff00aa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.7), 0 0 22px rgba(255, 0, 170, 0.55);
+    }
+    100% {
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        text-shadow: 0 0 8px rgba(255, 0, 255, 0.7), 0 0 22px rgba(0, 255, 255, 0.55);
+    }
+}
+
+.discord-join-btn {
+    display: inline-block;
+    padding: 0.9rem 2.8rem;
+    border-radius: 999px;
+    border: 2px solid var(--primary-blue);
+    text-decoration: none;
+    color: var(--text-white);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    background: linear-gradient(90deg, rgba(0, 119, 255, 0.35), rgba(0, 212, 255, 0.35));
+    box-shadow: 0 0 18px rgba(0, 212, 255, 0.25), inset 0 0 12px rgba(0, 212, 255, 0.16);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.discord-join-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 28px rgba(0, 212, 255, 0.48), inset 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
 .section-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -911,6 +1000,41 @@ body {
     transform: translateX(10px);
 }
 
+.achievement-item.achievement-gold-glow {
+    border-color: rgba(255, 204, 0, 0.75);
+    box-shadow:
+        0 0 10px rgba(255, 204, 0, 0.22),
+        0 0 24px rgba(255, 184, 0, 0.18),
+        inset 0 0 10px rgba(255, 215, 0, 0.08);
+    animation: goldBorderPulse 3.8s ease-in-out infinite;
+}
+
+.achievement-item.achievement-gold-glow:hover {
+    border-color: rgba(255, 224, 120, 0.95);
+    box-shadow:
+        0 0 14px rgba(255, 224, 120, 0.36),
+        0 0 34px rgba(255, 194, 38, 0.42),
+        inset 0 0 16px rgba(255, 214, 92, 0.2);
+    transform: translateX(10px);
+}
+
+@keyframes goldBorderPulse {
+    0%, 100% {
+        border-color: rgba(255, 204, 0, 0.65);
+        box-shadow:
+            0 0 8px rgba(255, 204, 0, 0.2),
+            0 0 18px rgba(255, 184, 0, 0.16),
+            inset 0 0 8px rgba(255, 215, 0, 0.06);
+    }
+    50% {
+        border-color: rgba(255, 232, 130, 0.95);
+        box-shadow:
+            0 0 14px rgba(255, 232, 130, 0.5),
+            0 0 40px rgba(255, 194, 38, 0.52),
+            inset 0 0 14px rgba(255, 214, 92, 0.22);
+    }
+}
+
 .achievement-icon {
     font-size: 2rem;
     flex-shrink: 0;
@@ -1028,6 +1152,14 @@ body {
 
     .binary-container {
         padding: 0 30px;
+    }
+
+    .discord-content {
+        padding: 2rem 1.2rem;
+    }
+
+    .discord-neon-text {
+        letter-spacing: 0.05em;
     }
 }
 
